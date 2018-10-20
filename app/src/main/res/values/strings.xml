@@ -44,6 +44,7 @@
 
     <!-- Intent Extras -->
     <string name="intent_chatroom">intent_chatroom</string>
+    <string name="intent_challenge">intent_challenge</string>
 
 
     <!-- Dialog Names -->
@@ -55,6 +56,7 @@
     <!-- Firebase Database Nodes -->
     <string name="dbnode_users">users</string>
     <string name="dbnode_chatrooms">chatrooms</string>
+    <string name="dbnode_challenges">challenges</string>
 
 
     <!-- Firebase Database Fields -->
@@ -71,6 +73,17 @@
     <string name="field_message">message</string>
     <string name="field_timestamp">timestamp</string>
 
+
+    <string name="field_challenge_name">name</string>
+    <string name="field_challenge_id">challenge_id</string>
+    <string name="field_challenge_desc">rules</string>
+    <string name="field_challenge_userId">userId</string>
+    <string name="field_challenge_receivedFrom">receivedFrom</string>
+    <string name="field_challenge_sentto">sentTo</string>
+    <string name="field_challenge_status">status</string>
+    <string name="field_challenge_timeframe">timeFrame</string>
+    <string name="field_challenge_createdDate">createdDateTime</string>
+    <string name="field_challenge_updatedDate">updatedDateTime</string>
 
     <!-- Strings -->
     <string name="alert_dialog_delete">DELETE</string>
