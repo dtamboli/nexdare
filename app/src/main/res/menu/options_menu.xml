@@ -10,7 +10,10 @@
         android:id="@+id/optionAccountSettings"
         android:title="@string/account_settings"
         />
-
+    <item
+        android:id="@+id/optionNewChallenge"
+        android:title="New Challenge"
+        />
     <item
         android:id="@+id/optionChat"
         android:title="@string/chat"

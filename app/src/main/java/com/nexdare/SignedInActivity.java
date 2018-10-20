@@ -88,6 +88,10 @@ public class SignedInActivity extends AppCompatActivity {
                 intent = new Intent(SignedInActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.optionNewChallenge:
+                intent = new Intent(SignedInActivity.this, NewChallenge.class);
+                startActivity(intent);
+                return true;
             case R.id.optionChat:
                 intent = new Intent(SignedInActivity.this, ChatActivity.class);
                 startActivity(intent);
