@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "796233430548",
-    "firebase_url": "https://zettai-tools.firebaseio.com",
-    "project_id": "zettai-tools",
-    "storage_bucket": "zettai-tools.appspot.com"
+    "project_number": "17328036643",
+    "firebase_url": "https://nexdare-10b14.firebaseio.com",
+    "project_id": "nexdare-10b14",
+    "storage_bucket": "nexdare-10b14.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:796233430548:android:20ac967a0f9b78e3",
+        "mobilesdk_app_id": "1:17328036643:android:ccffc27992e6806a",
         "android_client_info": {
           "package_name": "com.nexdare"
         }
       },
       "oauth_client": [
         {
-          "client_id": "796233430548-8abjrrsus2601qagmgu886uchvmlubkb.apps.googleusercontent.com",
+          "client_id": "17328036643-12j1s3mcfpmgone00r3dgkpk0kh76fpu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyATaoZrHMs23BWY5lXF0Eub-qViAkvoLeM"
+          "current_key": "AIzaSyB-Xg9i4kov6SQfn18sfiAQ0lLH0hGW_xQ"
         }
       ],
       "services": {
