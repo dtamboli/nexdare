@@ -28,6 +28,8 @@
         <activity android:name="com.nexdare.ChallengeActivity"/>
         <activity android:name="com.nexdare.ChatroomActivity"/>
 
+
+
     </application>
 
 </manifest>
