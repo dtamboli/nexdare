@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NexDare.iml" filepath="$PROJECT_DIR$/NexDare.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nexdare.iml" filepath="$PROJECT_DIR$/nexdare.iml" />
     </modules>
   </component>
 </project>
