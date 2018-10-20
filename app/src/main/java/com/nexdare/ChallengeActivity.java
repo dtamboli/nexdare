@@ -222,6 +222,10 @@ public class ChallengeActivity extends AppCompatActivity {
                 intent = new Intent(ChallengeActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.optionNewChallenge:
+                intent = new Intent(ChallengeActivity.this, NewChallenge.class);
+                startActivity(intent);
+                return true;
             case R.id.optionChat:
                 intent = new Intent(ChallengeActivity.this, ChatActivity.class);
                 startActivity(intent);

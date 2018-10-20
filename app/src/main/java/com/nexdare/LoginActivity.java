@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
 
                     //check if email is verified
-                    if(user.isEmailVerified()){
+                    if(user.isEmailVerified()) {
                         Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                         Toast.makeText(LoginActivity.this, "Authenticated with: " + user.getEmail(), Toast.LENGTH_SHORT).show();
 
