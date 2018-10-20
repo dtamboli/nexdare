@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +35,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -43,6 +47,7 @@ public class ChallengeActivity extends AppCompatActivity {
     //widgets
     private ListView mListView;
     private FloatingActionButton mFob;
+    private TableLayout mTableLayout;
 
 
     //vars
@@ -54,6 +59,8 @@ public class ChallengeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signedin);
+        mTableLayout = (TableLayout) findViewById(R.id.tableChallenges);
+        mTableLayout.setStretchAllColumns(true);
 
         init();
         setupFirebaseAuth();
@@ -71,6 +78,38 @@ public class ChallengeActivity extends AppCompatActivity {
     public void init(){
         createChallenge();
         getChallenges();
+    }
+
+    private void writeData(List<Challenge> mChallenges) {
+        TableRow row= new TableRow(this);
+        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        row.setLayoutParams(lp);
+
+        //This loop adds the database content to the table (using hardcoded values here for demonstration)
+        for(Challenge challenge : mChallenges) {
+
+
+            row= new TableRow(this);
+            lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            row.setLayoutParams(lp);
+            TextView tChallengeName = new TextView(this);
+            TextView tChallengeStatus = new TextView(this);
+            TextView tChallengeSentTo = new TextView(this);
+            TextView tChallengeTimeRemaining = new TextView(this);
+            tChallengeName.setText(challenge.getName());
+            tChallengeName.setPadding(3, 3, 3, 3);
+            tChallengeStatus.setText(challenge.getStatus());
+            tChallengeStatus.setPadding(3, 3, 3, 3);
+            tChallengeSentTo.setText(challenge.getSentTo());
+            tChallengeSentTo.setPadding(3, 3, 3, 3);
+            tChallengeTimeRemaining.setText(String.valueOf(challenge.getTimeFrame()));
+            tChallengeTimeRemaining.setPadding(3, 3, 3, 3);
+            row.addView(tChallengeName);
+            row.addView(tChallengeStatus);
+            row.addView(tChallengeSentTo);
+            row.addView(tChallengeTimeRemaining);
+            mTableLayout.addView(row);
+        }
     }
 
     private void setupChatroomList(){
@@ -122,6 +161,7 @@ public class ChallengeActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
         Query query = reference.child(getString(R.string.dbnode_challenges));
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -145,6 +185,7 @@ public class ChallengeActivity extends AppCompatActivity {
                         }
                     }
                 }
+                writeData(mChallenges);
             }
 
             @Override
