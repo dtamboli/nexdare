@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NexDare</string>
+    <string name="app_name">Nexer</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
