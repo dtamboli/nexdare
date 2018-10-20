@@ -23,9 +23,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 
 public class LoginActivity extends AppCompatActivity {
+
+    TextView Title,Message;
 
     private static final String TAG = "LoginActivity";
     //constants
@@ -42,6 +45,23 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Log.d("FCMToken", "token gah"+ FirebaseInstanceId.getInstance().getToken());
+
+        Title = (TextView)findViewById(R.id.text_title);
+        Message = (TextView)findViewById(R.id.text_message);
+
+        if(getIntent().getExtras()!=null)
+        {
+            for(String key : getIntent().getExtras().keySet())
+            {
+                if (key.equals("title"))
+                    Title.setText(getIntent().getExtras().getString(key));
+                else if(key.equals("message"))
+                    Message.setText(getIntent().getExtras().getString(key));
+            }
+        }
+
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);

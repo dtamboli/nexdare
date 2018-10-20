@@ -27,6 +27,8 @@
         <activity android:name="com.nexdare.ChatActivity"/>
         <activity android:name="com.nexdare.ChatroomActivity"/>
 
+
+
     </application>
 
 </manifest>
