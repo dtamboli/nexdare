@@ -25,7 +25,10 @@
         <activity android:name="com.nexdare.SignedInActivity"/>
         <activity android:name="com.nexdare.SettingsActivity"/>
         <activity android:name="com.nexdare.ChatActivity"/>
+        <activity android:name="com.nexdare.ChallengeActivity"/>
         <activity android:name="com.nexdare.ChatroomActivity"/>
+
+
 
     </application>
 

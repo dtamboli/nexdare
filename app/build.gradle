@@ -20,28 +20,35 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:26.+'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
 
     //Android Support Design Library
-    compile 'com.android.support:design:26.+'
+    implementation 'com.android.support:design:26.+'
 
     //Universal Image Loader
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    //Firebase Core
+    implementation 'com.google.firebase:firebase-core:11.4.0'
 
     //Firebase Authentication
-    compile 'com.google.firebase:firebase-auth:11.4.0'
+    implementation 'com.google.firebase:firebase-auth:11.4.0'
 
     //Firebase Realtime Database
-    compile 'com.google.firebase:firebase-database:11.4.0'
+    implementation 'com.google.firebase:firebase-database:11.4.0'
 
     //Firebase Storage
-    compile 'com.google.firebase:firebase-storage:11.4.0'
+    implementation 'com.google.firebase:firebase-storage:11.4.0'
+
+    //Firebase Storage
+    implementation 'com.google.firebase:firebase-messaging:11.4.0'
 
 }
 apply plugin: 'com.google.gms.google-services'
