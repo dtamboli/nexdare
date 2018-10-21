@@ -23,6 +23,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -161,13 +162,15 @@ public class DateTimePickerFragment extends AbstractDialogFragment {
 
     private void configureDateTimeSpinner(final Spinner dateTimeSpinner) {
         List<String> choices = new ArrayList<>();
-        if (Objects.equals(DATE, mDateOrTimeChoice)) {
-            choices.add(computeChoice(DATE));
-        } else if (Objects.equals(TIME, mDateOrTimeChoice)) {
-            choices.add(computeChoice(TIME));
-        } else {
-            choices.add(computeChoice(TIME));
-            choices.add(computeChoice(DATE));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (Objects.equals(DATE, mDateOrTimeChoice)) {
+                choices.add(computeChoice(DATE));
+            } else if (Objects.equals(TIME, mDateOrTimeChoice)) {
+                choices.add(computeChoice(TIME));
+            } else {
+                choices.add(computeChoice(TIME));
+                choices.add(computeChoice(DATE));
+            }
         }
         dateTimeSpinner.setAdapter(
                 new ArrayAdapter<>(

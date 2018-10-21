@@ -40,6 +40,7 @@
         <activity android:name="com.nexdare.ChallengeActivity"/>
         <activity android:name="com.nexdare.NewChallenge"/>
         <activity android:name="com.nexdare.ChatroomActivity"/>
+        <activity android:name="com.nexdare.ListChallenges"/>
         <activity android:name="com.nexdare.AdminActivity"/>
 
     </application>

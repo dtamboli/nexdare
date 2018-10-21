@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Authenticated with: " + user.getEmail(), Toast.LENGTH_SHORT)
                                 .show();
 
-                        Intent intent = new Intent(LoginActivity.this, SignedInActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, ListChallenges.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                         // check for extras from FCM
