@@ -1,5 +1,6 @@
 package com.nexdare.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,7 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nexdare.NewChallenge;
 import com.nexdare.R;
+import com.nexdare.ViewChallenge;
 import com.nexdare.models.Challenge;
 
 import java.util.ArrayList;
@@ -42,7 +45,7 @@ public class ListSentChallenges extends Fragment {
     private ArrayList<Challenge> mChallenges;
 
     //HEADER DATA SOURCE
-    static String[] spaceProbeHeaders={"Name","Status","Sent To", "Time Remaining"};
+    static String[] spaceProbeHeaders={"Name","Status","Sent To", "Time Remaining", "Rules"};
 
 
     public static ListSentChallenges newInstance() {
@@ -105,7 +108,7 @@ public class ListSentChallenges extends Fragment {
                 List<String[]> data = new ArrayList<>();
                 for(Challenge challenge : mChallenges) {
                     String[] strings = {challenge.getName(),challenge.getStatus(),challenge.getSentTo(),
-                            String.valueOf(challenge.getTimeFrame())};
+                            String.valueOf(challenge.getTimeFrame()), challenge.getRules()};
                     data.add(strings);
                 }
                 tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity(), data));
@@ -114,7 +117,16 @@ public class ListSentChallenges extends Fragment {
                 tableView.addDataClickListener(new TableDataClickListener() {
                     @Override
                     public void onDataClicked(int rowIndex, Object clickedData) {
-                        Toast.makeText(getActivity(), ((String[])clickedData)[1], Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), ViewChallenge.class);
+
+                        //Add the bundle to the intent
+                        intent.putExtra("challengeName", ((String[])clickedData)[0]);
+                        intent.putExtra("status", ((String[])clickedData)[1]);
+                        intent.putExtra("from", ((String[])clickedData)[2]);
+                        intent.putExtra("timeRemaining", ((String[])clickedData)[3]);
+                        intent.putExtra("rules", ((String[])clickedData)[4]);
+
+                        startActivity(intent);
                     }
                 });
 
