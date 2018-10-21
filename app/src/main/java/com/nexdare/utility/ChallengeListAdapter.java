@@ -30,10 +30,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
-/**
- * Created by User on 9/18/2017.
- */
-
 public class ChallengeListAdapter extends ArrayAdapter<Challenge> {
 
     private static final String TAG = "ChallengeListAdapter";
@@ -49,7 +45,7 @@ public class ChallengeListAdapter extends ArrayAdapter<Challenge> {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public static class ViewHolder{
+    public static class ViewHolder {
         TextView name, desc, timeFrame, sentTo, status;
         ImageView mProfileImage, mTrash;
     }
@@ -63,20 +59,3 @@ public class ChallengeListAdapter extends ArrayAdapter<Challenge> {
         return convertView;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

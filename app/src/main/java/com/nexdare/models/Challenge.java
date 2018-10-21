@@ -6,8 +6,7 @@ import android.os.Parcelable;
 import java.util.Date;
 import java.util.List;
 
-
-public class Challenge implements Parcelable{
+public class Challenge implements Parcelable {
 
     private String name;
     private String description;

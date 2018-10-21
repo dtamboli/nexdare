@@ -22,19 +22,23 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-import com.nexdare.models.User;
+import com.nexdare.R;
 
+import com.nexdare.models.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "RegisterActivity";
 
-    private static final String DOMAIN_NAME = "nexient.com";
+    private static final String DOMAIN_NAME = "gmail.com";
 
     //widgets
     private EditText mEmail, mPassword, mConfirmPassword;
     private Button mRegister;
     private ProgressBar mProgressBar;
+
+    //vars
+    public static boolean isActivityRunning;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -225,21 +229,16 @@ public class RegisterActivity extends AppCompatActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        isActivityRunning = true;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isActivityRunning = false;
+    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

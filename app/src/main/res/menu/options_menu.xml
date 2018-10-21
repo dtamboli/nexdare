@@ -2,21 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/optionSignOut"
-        android:title="@string/sign_out"
+        android:id="@+id/optionNewChallenge"
+        android:title="New Challenge"
         />
-
+    <item
+        android:id="@+id/optionAdmin"
+        android:title="Admin Teams"
+        />
+    <item
+        android:id="@+id/optionChat"
+        android:title="@string/chat"
+        />
     <item
         android:id="@+id/optionAccountSettings"
         android:title="@string/account_settings"
         />
     <item
-        android:id="@+id/optionNewChallenge"
-        android:title="New Challenge"
-        />
-    <item
-        android:id="@+id/optionChat"
-        android:title="@string/chat"
+        android:id="@+id/optionSignOut"
+        android:title="@string/sign_out"
         />
 
 </menu>

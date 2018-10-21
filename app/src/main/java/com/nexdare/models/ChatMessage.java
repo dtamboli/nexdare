@@ -1,6 +1,5 @@
 package com.nexdare.models;
 
-
 public class ChatMessage {
 
     private String message;
@@ -63,12 +62,7 @@ public class ChatMessage {
 
     @Override
     public String toString() {
-        return "ChatMessage{" +
-                "message='" + message + '\'' +
-                ", user_id='" + user_id + '\'' +
-                ", timestamp='" + timestamp + '\'' +
-                ", profile_image='" + profile_image + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return "ChatMessage{" + "message='" + message + '\'' + ", user_id='" + user_id + '\'' + ", timestamp='"
+                + timestamp + '\'' + ", profile_image='" + profile_image + '\'' + ", name='" + name + '\'' + '}';
     }
 }

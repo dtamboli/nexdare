@@ -6,7 +6,9 @@
 .DS_Store
 /build
 /app/build
+/app/bin
 /captures
 .externalNativeBuild
-/app/
 .idea/caches/
+/functions/node_modules/
+

@@ -1,6 +1,5 @@
 package com.nexdare;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -26,10 +25,11 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.nexdare.R;
+
 import com.nexdare.models.ChatMessage;
 import com.nexdare.models.Chatroom;
 import com.nexdare.models.User;
-
 
 public class NewChatroomDialog extends DialogFragment {
 
@@ -41,10 +41,10 @@ public class NewChatroomDialog extends DialogFragment {
     private int mUserSecurityLevel;
     private int mSeekProgress;
 
-
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_new_chatroom, container, false);
         mChatroomName = (EditText) view.findViewById(R.id.input_chatroom_name);
         mSeekBar = (SeekBar) view.findViewById(R.id.input_security_level);
@@ -58,51 +58,38 @@ public class NewChatroomDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
 
-                if(!mChatroomName.getText().toString().equals("")){
+                if (!mChatroomName.getText().toString().equals("")) {
                     Log.d(TAG, "onClick: creating new chat room");
 
-
-                    if(mUserSecurityLevel >= mSeekBar.getProgress()){
+                    if (mUserSecurityLevel >= mSeekBar.getProgress()) {
 
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                        //get the new chatroom unique id
-                        String chatroomId = reference
-                                .child(getString(R.string.dbnode_chatrooms))
-                                .push().getKey();
+                        // get the new chatroom unique id
+                        String chatroomId = reference.child(getString(R.string.dbnode_chatrooms)).push().getKey();
 
-                        //create the chatroom
+                        // create the chatroom
                         Chatroom chatroom = new Chatroom();
                         chatroom.setSecurity_level(String.valueOf(mSeekBar.getProgress()));
                         chatroom.setChatroom_name(mChatroomName.getText().toString());
                         chatroom.setCreator_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
                         chatroom.setChatroom_id(chatroomId);
 
+                        // insert the new chatroom into the database
+                        reference.child(getString(R.string.dbnode_chatrooms)).child(chatroomId).setValue(chatroom);
 
-                        //insert the new chatroom into the database
-                        reference
-                                .child(getString(R.string.dbnode_chatrooms))
-                                .child(chatroomId)
-                                .setValue(chatroom);
+                        // create a unique id for the message
+                        String messageId = reference.child(getString(R.string.dbnode_chatrooms)).push().getKey();
 
-                        //create a unique id for the message
-                        String messageId = reference
-                                .child(getString(R.string.dbnode_chatrooms))
-                                .push().getKey();
-
-                        //insert the first message into the chatroom
+                        // insert the first message into the chatroom
                         ChatMessage message = new ChatMessage();
 
                         message.setMessage("Welcome to the new chatroom!");
                         message.setTimestamp(getTimestamp());
-                        reference
-                                .child(getString(R.string.dbnode_chatrooms))
-                                .child(chatroomId)
-                                .child(getString(R.string.field_chatroom_messages))
-                                .child(messageId)
-                                .setValue(message);
-                        ((ChatActivity)getActivity()).init();
+                        reference.child(getString(R.string.dbnode_chatrooms)).child(chatroomId)
+                                .child(getString(R.string.field_chatroom_messages)).child(messageId).setValue(message);
+                        ((ChatActivity) getActivity()).getChatrooms();
                         getDialog().dismiss();
-                    }else{
+                    } else {
                         Toast.makeText(getActivity(), "insuffient security level", Toast.LENGTH_SHORT).show();
                     }
 
@@ -132,22 +119,23 @@ public class NewChatroomDialog extends DialogFragment {
         return view;
     }
 
-    private void getUserSecurityLevel(){
+    private void getUserSecurityLevel() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-        Query query = reference.child(getString(R.string.dbnode_users))
-                .orderByKey()
-                //OR could use ->.orderByChild(getString(R.string.field_user_id))
+        Query query = reference.child(getString(R.string.dbnode_users)).orderByKey()
+                // OR could use ->.orderByChild(getString(R.string.field_user_id))
                 .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleSnapshot:  dataSnapshot.getChildren()){
+                // alternatively could have used:
+                // DataSnapshot singleSnapshot = dataSnapshot.getChildren().iterator().next();
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "onDataChange: users security level: "
                             + singleSnapshot.getValue(User.class).getSecurity_level());
 
-                    mUserSecurityLevel = Integer.parseInt(String.valueOf(
-                            singleSnapshot.getValue(User.class).getSecurity_level()));
+                    mUserSecurityLevel = Integer
+                            .parseInt(String.valueOf(singleSnapshot.getValue(User.class).getSecurity_level()));
                 }
             }
 
@@ -161,29 +149,13 @@ public class NewChatroomDialog extends DialogFragment {
 
     /**
      * Return the current timestamp in the form of a string
+     * 
      * @return
      */
-    private String getTimestamp(){
+    private String getTimestamp() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
         sdf.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
         return sdf.format(new Date());
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
