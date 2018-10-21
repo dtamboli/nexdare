@@ -89,6 +89,9 @@
     <string name="alert_dialog_delete">DELETE</string>
     <string name="alert_dialog_cancel">Cancel</string>
 
+    <string name="button_choosedatetime">Choose Date/Time</string>
+    <string name="choose_date_or_time">Choose Date or Time:</string>
+
 </resources>
 
 
