@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcel;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
@@ -72,6 +74,8 @@ public class ViewChallenge extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_challenge);
 
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         tv = (TextView) findViewById(R.id.challenge);
         tv1 = (TextView) findViewById(R.id.status);
         tv2 = (TextView) findViewById(R.id.from);
@@ -93,8 +97,10 @@ public class ViewChallenge extends AppCompatActivity {
             tv5.setText(getIntent().getStringExtra("submitionNotes"));
         }
         if(getIntent().getStringExtra("imageUri") != null) {
+            File localFile = new File("gs://zettai-tools.appspot.com/images/17b54a4b-3953-41ec-90da-148aec9fcb3d");
+            downloadFile(localFile);
             image = (ImageView) findViewById(R.id.imgView);
-            image.setImageURI(Uri.fromFile(new File(getIntent().getStringExtra("imageUri"))));
+            image.setImageURI(Uri.fromFile(localFile));
         }
         challengeId = getIntent().getStringExtra("challengeId");
 
@@ -102,8 +108,6 @@ public class ViewChallenge extends AppCompatActivity {
         btnUpload = (Button) findViewById(R.id.btnUpload);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         imageView = (ImageView) findViewById(R.id.imgView);
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
 
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +138,24 @@ public class ViewChallenge extends AppCompatActivity {
         setupFirebaseAuth();
 
 
+    }
+
+    private void downloadFile(final File localFile) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        if(localFile != null) {
+            storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Log.e("firebase ", ";local tem file created  created " + localFile.getPath());
+                    //  updateDb(timestamp,localFile.toString(),position);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.e("firebase ", ";local tem file not created  created " + exception.toString());
+                }
+            });
+        }
     }
 
     private void updateChallenge() {
