@@ -13,15 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.List;
 
 import com.nexdare.R;
 import com.nexdare.models.ChatMessage;
-
-/**
- * Created by User on 9/18/2017.
- */
 
 public class ChatMessageListAdapter extends ArrayAdapter<ChatMessage> {
 
@@ -30,13 +27,14 @@ public class ChatMessageListAdapter extends ArrayAdapter<ChatMessage> {
     private int mLayoutResource;
     private Context mContext;
 
-    public ChatMessageListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<ChatMessage> objects) {
+    public ChatMessageListAdapter(@NonNull Context context, @LayoutRes int resource,
+            @NonNull List<ChatMessage> objects) {
         super(context, resource, objects);
         mContext = context;
         mLayoutResource = resource;
     }
 
-    public static class ViewHolder{
+    public static class ViewHolder {
         TextView name, message;
         ImageView mProfileImage;
     }
@@ -47,7 +45,7 @@ public class ChatMessageListAdapter extends ArrayAdapter<ChatMessage> {
 
         final ViewHolder holder;
 
-        if(convertView == null){
+        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(mLayoutResource, parent, false);
             holder = new ViewHolder();
@@ -57,43 +55,34 @@ public class ChatMessageListAdapter extends ArrayAdapter<ChatMessage> {
             holder.mProfileImage = (ImageView) convertView.findViewById(R.id.profile_image);
 
             convertView.setTag(holder);
-        }else{
+        } else {
             holder = (ViewHolder) convertView.getTag();
             holder.name.setText("");
             holder.message.setText("");
         }
 
-        try{
-            //set the message
+        try {
+            // set the message
             holder.message.setText(getItem(position).getMessage());
 
-            ImageLoader.getInstance().displayImage(getItem(position).getProfile_image(),
-                    holder.mProfileImage);
+            // set the name
             holder.name.setText(getItem(position).getName());
 
+            // set the image
+            if (holder.mProfileImage.getTag() == null
+                    || !holder.mProfileImage.getTag().equals(getItem(position).getProfile_image())) {
 
-        }catch (NullPointerException e){
-            Log.e(TAG, "getView: NullPointerException: ", e.getCause() );
+                // we only load image if prev. URL and current URL do not match, or tag is null
+                ImageLoader.getInstance().displayImage(getItem(position).getProfile_image(), holder.mProfileImage,
+                        new SimpleImageLoadingListener());
+                holder.mProfileImage.setTag(getItem(position).getProfile_image());
+            }
+
+        } catch (NullPointerException e) {
+            Log.e(TAG, "getView: NullPointerException: ", e.getCause());
         }
 
         return convertView;
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

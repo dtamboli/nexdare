@@ -17,22 +17,6 @@
             android:layout_marginTop="20dp"
             android:padding="20dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_title"
-                android:text="Message Title"
-                android:layout_marginTop="55dp"
-                android:textSize="20dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_message"
-                android:text="Message Title"
-                android:layout_marginTop="25dp"
-                android:textSize="24dp"
-                android:layout_below="@+id/text_title"/>
 
             <ImageView
                 android:layout_width="match_parent"

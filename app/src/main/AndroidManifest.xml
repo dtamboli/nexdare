@@ -14,6 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name="com.nexdare.utility.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.nexdare.utility.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
         <activity android:name="com.nexdare.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -28,6 +40,7 @@
         <activity android:name="com.nexdare.ChallengeActivity"/>
         <activity android:name="com.nexdare.NewChallenge"/>
         <activity android:name="com.nexdare.ChatroomActivity"/>
+        <activity android:name="com.nexdare.AdminActivity"/>
 
     </application>
 

@@ -11,7 +11,6 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import com.nexdare.R;
 
-
 public class UniversalImageLoader {
     private static final String TAG = "UniversalImageLoader";
     private static final int defaultImage = R.drawable.ic_android;
@@ -22,28 +21,19 @@ public class UniversalImageLoader {
         Log.d(TAG, "UniversalImageLoader: started");
     }
 
-    public ImageLoaderConfiguration getConfig(){
+    public ImageLoaderConfiguration getConfig() {
         Log.d(TAG, "getConfig: Returning image loader configuration");
         // UNIVERSAL IMAGE LOADER SETUP
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .showImageOnLoading(defaultImage) // resource or drawable
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().showImageOnLoading(defaultImage)
                 .showImageForEmptyUri(defaultImage) // resource or drawable
                 .showImageOnFail(defaultImage) // resource or drawable
-                .cacheOnDisk(true).cacheInMemory(true)
-                .cacheOnDisk(true).resetViewBeforeLoading(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .displayer(new FadeInBitmapDisplayer(300)).build();
+                .cacheOnDisk(true).cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(true)
+                .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(300)).build();
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                mContext)
-                .defaultDisplayImageOptions(defaultOptions)
-                .memoryCache(new WeakMemoryCache())
-                .diskCacheSize(100 * 1024 * 1024)
-                .build();
-
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
+                .defaultDisplayImageOptions(defaultOptions).memoryCache(new WeakMemoryCache())
+                .diskCacheSize(100 * 1024 * 1024).build();
 
         return config;
     }
-
-
 }

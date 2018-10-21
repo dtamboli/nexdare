@@ -1,6 +1,5 @@
 package com.nexdare.models;
 
-
 public class User {
 
     private String name;
@@ -8,17 +7,30 @@ public class User {
     private String profile_image;
     private String user_id;
     private String security_level;
+    private String messaging_token;
+    private String department;
 
-    public User(String name, String phone, String profile_image, String user_id, String security_level) {
+    public User(String name, String phone, String profile_image, String user_id, String security_level,
+            String messaging_token, String department) {
         this.name = name;
         this.phone = phone;
         this.profile_image = profile_image;
         this.user_id = user_id;
         this.security_level = security_level;
+        this.messaging_token = messaging_token;
+        this.department = department;
     }
 
     public User() {
 
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     public String getSecurity_level() {
@@ -27,6 +39,14 @@ public class User {
 
     public void setSecurity_level(String security_level) {
         this.security_level = security_level;
+    }
+
+    public String getMessaging_token() {
+        return messaging_token;
+    }
+
+    public void setMessaging_token(String messaging_token) {
+        this.messaging_token = messaging_token;
     }
 
     public String getUser_id() {
@@ -63,12 +83,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", profile_image='" + profile_image + '\'' +
-                ", user_id='" + user_id + '\'' +
-                ", security_level=" + security_level +
-                '}';
+        return "User{" + "name='" + name + '\'' + ", phone='" + phone + '\'' + ", profile_image='" + profile_image
+                + '\'' + ", user_id='" + user_id + '\'' + ", security_level='" + security_level + '\''
+                + ", messaging_token='" + messaging_token + '\'' + ", department='" + department + '\'' + '}';
     }
 }
