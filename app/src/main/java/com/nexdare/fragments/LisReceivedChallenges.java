@@ -47,7 +47,7 @@ public class LisReceivedChallenges extends Fragment {
     private ArrayList<Challenge> mChallenges;
 
     //HEADER DATA SOURCE
-    static String[] spaceProbeHeaders={"Name","Status","Received From", "Time Remaining"};
+    static String[] spaceProbeHeaders={"Name","Status","Received From", "Time Remaining", "Rules", "Submition Notes", "Image", "ID"};
 
 
     public static LisReceivedChallenges newInstance() {
@@ -91,6 +91,8 @@ public class LisReceivedChallenges extends Fragment {
                                     .setDescription(objectMap.get(getString(R.string.field_challenge_desc)).toString());
                             challenge.setReceivedFrom(objectMap.get(getString(R.string.field_challenge_userId)).toString());
                             challenge.setStatus(objectMap.get(getString(R.string.field_challenge_status)).toString());
+                            challenge.setSubmitionNotes(objectMap.get("submitionNotes") == null ? "" : objectMap.get("submitionNotes").toString());
+                            challenge.setImageUri(objectMap.get("imageUri") == null ? "" : objectMap.get("imageUri").toString());
                             challenge.setTimeFrame(Integer
                                     .parseInt(objectMap.get(getString(R.string.field_challenge_timeframe)).toString()));
                             mChallenges.add(challenge);
@@ -110,7 +112,8 @@ public class LisReceivedChallenges extends Fragment {
                 List<String[]> data = new ArrayList<>();
                 for(Challenge challenge : mChallenges) {
                     String[] strings = {challenge.getName(),challenge.getStatus(),challenge.getReceivedFrom(),
-                            String.valueOf(challenge.getTimeFrame())};
+                            String.valueOf(challenge.getTimeFrame()), challenge.getRules(),
+                            challenge.getSubmitionNotes(), challenge.getImageUri(), challenge.getChallenge_id()};
                     data.add(strings);
                 }
                 tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity(), data));
@@ -127,6 +130,9 @@ public class LisReceivedChallenges extends Fragment {
                         intent.putExtra("from", ((String[])clickedData)[2]);
                         intent.putExtra("timeRemaining", ((String[])clickedData)[3]);
                         intent.putExtra("rules", ((String[])clickedData)[4]);
+                        intent.putExtra("submitionNotes", ((String[])clickedData)[5]);
+                        intent.putExtra("imageUri", ((String[])clickedData)[6]);
+                        intent.putExtra("challengeId", ((String[])clickedData)[7]);
 
                         startActivity(intent);
                     }

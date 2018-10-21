@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,11 +37,13 @@ import com.nexdare.models.Challenge;
 import com.nexdare.utility.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.joda.time.Hours;
 import org.joda.time.LocalDateTime;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class ViewChallenge extends AppCompatActivity {
@@ -61,6 +64,8 @@ public class ViewChallenge extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 71;
     FirebaseStorage storage;
     StorageReference storageReference;
+    ImageView image;
+    String challengeId = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +89,14 @@ public class ViewChallenge extends AppCompatActivity {
         tv3.setEnabled(false);
         tv4.setText("Rules: " + getIntent().getStringExtra("rules"));
         tv4.setEnabled(false);
+        if(getIntent().getStringExtra("submitionNotes") != null) {
+            tv5.setText(getIntent().getStringExtra("submitionNotes"));
+        }
+        if(getIntent().getStringExtra("imageUri") != null) {
+            image = (ImageView) findViewById(R.id.imgView);
+            image.setImageURI(Uri.fromFile(new File(getIntent().getStringExtra("imageUri"))));
+        }
+        challengeId = getIntent().getStringExtra("challengeId");
 
         btnChoose = (Button) findViewById(R.id.btnChoose);
         btnUpload = (Button) findViewById(R.id.btnUpload);
@@ -109,7 +122,11 @@ public class ViewChallenge extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String submittionNotes = tv5.getText();
+                updateChallenge();
+                Intent intent = new Intent(ViewChallenge.this, ListChallenges.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -118,6 +135,26 @@ public class ViewChallenge extends AppCompatActivity {
 
 
     }
+
+    private void updateChallenge() {
+
+        String filePathStr = "";
+        if(filePath != null) {
+            filePathStr = filePath.getPath();
+        }
+        String submittionNotes = String.valueOf(tv5.getText());
+        //get a database reference
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child(getString(R.string.dbnode_challenges));
+
+        //insert the new message into the chatroom
+        reference.child(challengeId)
+                .child("submitionNotes").setValue(submittionNotes);
+
+        reference.child(challengeId)
+                .child("imageUri").setValue(filePathStr);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
