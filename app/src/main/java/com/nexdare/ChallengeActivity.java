@@ -38,22 +38,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class ChallengeActivity extends AppCompatActivity {
 
     private static final String TAG = "ChallengeActivity";
 
     private FirebaseAuth.AuthStateListener mAuthListener;
-    //widgets
+    // widgets
     private ListView mListView;
     private FloatingActionButton mFob;
     private TableLayout mTableLayout;
 
-
-    //vars
+    // vars
     private ArrayList<Challenge> mChallenges;
     private ChallengeListAdapter mAdapter;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,26 +67,26 @@ public class ChallengeActivity extends AppCompatActivity {
     /**
      * init universal image loader
      */
-    private void initImageLoader(){
+    private void initImageLoader() {
         UniversalImageLoader imageLoader = new UniversalImageLoader(ChallengeActivity.this);
         ImageLoader.getInstance().init(imageLoader.getConfig());
     }
 
-    public void init(){
+    public void init() {
         createChallenge();
         getChallenges();
     }
 
     private void writeData(List<Challenge> mChallenges) {
-        TableRow row= new TableRow(this);
+        TableRow row = new TableRow(this);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
         row.setLayoutParams(lp);
 
-        //This loop adds the database content to the table (using hardcoded values here for demonstration)
-        for(Challenge challenge : mChallenges) {
+        // This loop adds the database content to the table (using hardcoded values here
+        // for demonstration)
+        for (Challenge challenge : mChallenges) {
 
-
-            row= new TableRow(this);
+            row = new TableRow(this);
             lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
             TextView tChallengeName = new TextView(this);
@@ -112,7 +109,7 @@ public class ChallengeActivity extends AppCompatActivity {
         }
     }
 
-    private void setupChatroomList(){
+    private void setupChatroomList() {
         Log.d(TAG, "setupChatroomList: setting up chatroom listview");
         mAdapter = new ChallengeListAdapter(ChallengeActivity.this, R.layout.layout_chatroom_listitem, mChallenges);
         mListView.setAdapter(mAdapter);
@@ -132,11 +129,11 @@ public class ChallengeActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        //get a database reference
+        // get a database reference
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child(getString(R.string.dbnode_challenges));
 
-        //create the new messages id
+        // create the new messages id
         String newMessageId = reference.push().getKey();
         Challenge challenge = new Challenge();
         challenge.setChallenge_id("Id");
@@ -147,14 +144,11 @@ public class ChallengeActivity extends AppCompatActivity {
         challenge.setRules("Post Video as proof");
         challenge.setTimeFrame(100);
 
-        //insert the new message into the chatroom
-        reference
-                .child(newMessageId)
-                .setValue(challenge);
+        // insert the new message into the chatroom
+        reference.child(newMessageId).setValue(challenge);
     }
 
-
-    private void getChallenges(){
+    private void getChallenges() {
         Log.d(TAG, "getChallenges: retrieving challenges from firebase database.");
         mChallenges = new ArrayList<>();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -165,22 +159,22 @@ public class ChallengeActivity extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot singleSnapshot:  dataSnapshot.getChildren()){
-                    Log.d(TAG, "onDataChange: found challenge: "
-                            + singleSnapshot.getValue());
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "onDataChange: found challenge: " + singleSnapshot.getValue());
 
                     Challenge challenge = new Challenge();
                     Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
-                    if(objectMap.get(getString(R.string.field_challenge_userId)) != null) {
+                    if (objectMap.get(getString(R.string.field_challenge_userId)) != null) {
                         String userId = objectMap.get(getString(R.string.field_challenge_userId)).toString();
-                        if(userId.equals(user.getEmail())) {
+                        if (userId.equals(user.getEmail())) {
                             challenge.setChallenge_id(objectMap.get(getString(R.string.field_challenge_id)).toString());
                             challenge.setName(objectMap.get(getString(R.string.field_challenge_name)).toString());
-                            challenge.setDescription(objectMap.get(getString(R.string.field_challenge_desc)).toString());
+                            challenge
+                                    .setDescription(objectMap.get(getString(R.string.field_challenge_desc)).toString());
                             challenge.setSentTo(objectMap.get(getString(R.string.field_challenge_sentto)).toString());
                             challenge.setStatus(objectMap.get(getString(R.string.field_challenge_status)).toString());
-                            challenge.setTimeFrame(Integer.parseInt(objectMap.get(getString
-                                    (R.string.field_challenge_timeframe)).toString()));
+                            challenge.setTimeFrame(Integer
+                                    .parseInt(objectMap.get(getString(R.string.field_challenge_timeframe)).toString()));
                             mChallenges.add(challenge);
                         }
                     }
@@ -201,9 +195,6 @@ public class ChallengeActivity extends AppCompatActivity {
         checkAuthenticationState();
     }
 
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
@@ -214,39 +205,40 @@ public class ChallengeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch (item.getItemId()){
-            case R.id.optionSignOut:
-                signOut();
-                return true;
-            case R.id.optionAccountSettings:
-                intent = new Intent(ChallengeActivity.this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.optionNewChallenge:
-                intent = new Intent(ChallengeActivity.this, NewChallenge.class);
-                startActivity(intent);
-                return true;
-            case R.id.optionChat:
-                intent = new Intent(ChallengeActivity.this, ChatActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+        case R.id.optionSignOut:
+            signOut();
+            return true;
+        case R.id.optionAccountSettings:
+            intent = new Intent(ChallengeActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        case R.id.optionNewChallenge:
+            // intent = new Intent(ChallengeActivity.this, NewChallenge.class);
+            // startActivity(intent);
+            return true;
+        case R.id.optionChat:
+            intent = new Intent(ChallengeActivity.this, ChatActivity.class);
+            startActivity(intent);
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
 
     /**
      * Sign out the current user
      */
-    private void signOut(){
+    private void signOut() {
         Log.d(TAG, "signOut: signing out");
         FirebaseAuth.getInstance().signOut();
     }
 
     /*
-            ----------------------------- Firebase setup ---------------------------------
-         */
-    private void setupFirebaseAuth(){
+     * ----------------------------- Firebase setup
+     * ---------------------------------
+     */
+    private void setupFirebaseAuth() {
         Log.d(TAG, "setupFirebaseAuth: started.");
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -283,34 +275,21 @@ public class ChallengeActivity extends AppCompatActivity {
         }
     }
 
-    private void checkAuthenticationState(){
+    private void checkAuthenticationState() {
         Log.d(TAG, "checkAuthenticationState: checking authentication state.");
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(user == null){
+        if (user == null) {
             Log.d(TAG, "checkAuthenticationState: user is null, navigating back to login screen.");
 
             Intent intent = new Intent(ChallengeActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
-        }else{
+        } else {
             Log.d(TAG, "checkAuthenticationState: user is authenticated.");
         }
     }
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

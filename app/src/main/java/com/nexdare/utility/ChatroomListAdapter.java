@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,13 +27,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.List;
 
 import com.nexdare.ChatActivity;
-import com.nexdare.models.User;
+
 import com.nexdare.R;
 import com.nexdare.models.Chatroom;
-
-/**
- * Created by User on 9/18/2017.
- */
+import com.nexdare.models.User;
 
 public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
 
@@ -48,9 +47,11 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public static class ViewHolder{
+    public static class ViewHolder {
         TextView name, creatorName, numberMessages;
         ImageView mProfileImage, mTrash;
+        Button leaveChat;
+        RelativeLayout layoutContainer;
     }
 
     @NonNull
@@ -59,7 +60,7 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
 
         final ViewHolder holder;
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = mInflater.inflate(mLayoutResource, parent, false);
             holder = new ViewHolder();
 
@@ -68,34 +69,34 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
             holder.numberMessages = (TextView) convertView.findViewById(R.id.number_chatmessages);
             holder.mProfileImage = (ImageView) convertView.findViewById(R.id.profile_image);
             holder.mTrash = (ImageView) convertView.findViewById(R.id.icon_trash);
-        }else{
+            holder.leaveChat = (Button) convertView.findViewById(R.id.leave_chat);
+            holder.layoutContainer = (RelativeLayout) convertView.findViewById(R.id.layout_container);
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        try{
-            //set the chatroom name
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        try {
+            // set the chatroom name
             holder.name.setText(getItem(position).getChatroom_name());
 
-            //set the number of chat messages
-            String chatMessagesString = String.valueOf(getItem(position).getChatroom_messages().size())
-                    + " messages";
+            // set the number of chat messages
+            String chatMessagesString = String.valueOf(getItem(position).getChatroom_messages().size()) + " messages";
             holder.numberMessages.setText(chatMessagesString);
 
-            //get the users details who created the chatroom
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-            Query query = reference.child(mContext.getString(R.string.dbnode_users))
-                    .orderByKey()
+            // get the users details who created the chatroom
+            Query query = reference.child(mContext.getString(R.string.dbnode_users)).orderByKey()
                     .equalTo(getItem(position).getCreator_id());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for(DataSnapshot singleSnapshot:  dataSnapshot.getChildren()){
+                    for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                         Log.d(TAG, "onDataChange: Found chat room creator: "
-                                + singleSnapshot.getValue(User.class).toString());
+                                + singleSnapshot.getValue(User.class).getName());
                         String createdBy = "created by " + singleSnapshot.getValue(User.class).getName();
                         holder.creatorName.setText(createdBy);
-                        ImageLoader.getInstance().displayImage(
-                                singleSnapshot.getValue(User.class).getProfile_image() , holder.mProfileImage);
+                        ImageLoader.getInstance().displayImage(singleSnapshot.getValue(User.class).getProfile_image(),
+                                holder.mProfileImage);
                     }
                 }
 
@@ -108,37 +109,50 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
             holder.mTrash.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(getItem(position).getCreator_id().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                    if (getItem(position).getCreator_id()
+                            .equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         Log.d(TAG, "onClick: asking for permission to delete icon.");
-                        ((ChatActivity)mContext).showDeleteChatroomDialog(getItem(position).getChatroom_id());
-                    }else{
+                        ((ChatActivity) mContext).showDeleteChatroomDialog(getItem(position).getChatroom_id());
+                    } else {
                         Toast.makeText(mContext, "You didn't create this chatroom", Toast.LENGTH_SHORT).show();
                     }
 
                 }
             });
 
-        }catch (NullPointerException e){
-            Log.e(TAG, "getView: NullPointerException: ", e.getCause() );
+            holder.layoutContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick: navigating to chatroom");
+                    ((ChatActivity) mContext).joinChatroom(getItem(position));
+                }
+            });
+            /*
+             * -------- Check if user is part of this chatroom -------- 1) if they are: give
+             * them ability to leave it 2) if they aren't: hide the leave button
+             */
+            List<String> usersInChatroom = getItem(position).getUsers();
+            if (usersInChatroom.contains(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                holder.leaveChat.setVisibility(View.VISIBLE);
+
+                holder.leaveChat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(TAG, "onClick: leaving chatroom with id: " + getItem(position).getChatroom_id());
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                        reference.child(mContext.getString(R.string.dbnode_chatrooms))
+                                .child(getItem(position).getChatroom_id())
+                                .child(mContext.getString(R.string.field_users))
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+                        holder.leaveChat.setVisibility(View.GONE);
+                    }
+                });
+            }
+
+        } catch (NullPointerException e) {
+            Log.e(TAG, "getView: NullPointerException: ", e.getCause());
         }
 
         return convertView;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

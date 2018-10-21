@@ -10,3 +10,4 @@
 .externalNativeBuild
 /app/
 .vscode
+/functions/node_modules/

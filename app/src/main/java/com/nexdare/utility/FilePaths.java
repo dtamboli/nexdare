@@ -1,7 +1,5 @@
 package com.nexdare.utility;
 
-
-
 public class FilePaths {
 
     public FilePaths() {

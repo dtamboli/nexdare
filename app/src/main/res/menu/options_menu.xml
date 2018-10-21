@@ -11,6 +11,10 @@
         android:title="@string/account_settings"
         />
     <item
+        android:id="@+id/optionAdmin"
+        android:title="Admin Teams"
+        />
+    <item
         android:id="@+id/optionNewChallenge"
         android:title="New Challenge"
         />

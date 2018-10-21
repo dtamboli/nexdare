@@ -21,7 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+import com.nexdare.R;
 
 public class ResendVerificationDialog extends DialogFragment {
 
@@ -134,23 +134,4 @@ public class ResendVerificationDialog extends DialogFragment {
     private boolean isEmpty(String string){
         return string.equals("");
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

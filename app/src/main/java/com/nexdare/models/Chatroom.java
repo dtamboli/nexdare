@@ -5,22 +5,23 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-
-
-public class Chatroom implements Parcelable{
+public class Chatroom implements Parcelable {
 
     private String chatroom_name;
     private String creator_id;
     private String security_level;
     private String chatroom_id;
     private List<ChatMessage> chatroom_messages;
+    private List<String> users;
 
-    public Chatroom(String chatroom_name, String creator_id, String security_level, String chatroom_id, List<ChatMessage> chatroom_messages) {
+    public Chatroom(String chatroom_name, String creator_id, String security_level, String chatroom_id,
+            List<ChatMessage> chatroom_messages, List<String> users) {
         this.chatroom_name = chatroom_name;
         this.creator_id = creator_id;
         this.security_level = security_level;
         this.chatroom_id = chatroom_id;
         this.chatroom_messages = chatroom_messages;
+        this.users = users;
     }
 
     public Chatroom() {
@@ -45,6 +46,18 @@ public class Chatroom implements Parcelable{
             return new Chatroom[size];
         }
     };
+
+    public List<String> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<String> users) {
+        this.users = users;
+    }
+
+    public static Creator<Chatroom> getCREATOR() {
+        return CREATOR;
+    }
 
     public List<ChatMessage> getChatroom_messages() {
         return chatroom_messages;
@@ -88,13 +101,9 @@ public class Chatroom implements Parcelable{
 
     @Override
     public String toString() {
-        return "Chatroom{" +
-                "chatroom_name='" + chatroom_name + '\'' +
-                ", creator_id='" + creator_id + '\'' +
-                ", security_level='" + security_level + '\'' +
-                ", chatroom_id='" + chatroom_id + '\'' +
-                ", chatroom_messages=" + chatroom_messages +
-                '}';
+        return "Chatroom{" + "chatroom_name='" + chatroom_name + '\'' + ", creator_id='" + creator_id + '\''
+                + ", security_level='" + security_level + '\'' + ", chatroom_id='" + chatroom_id + '\''
+                + ", chatroom_messages=" + chatroom_messages + ", users=" + users + '}';
     }
 
     @Override
