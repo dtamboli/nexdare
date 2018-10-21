@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +26,7 @@ public class ListChallenges extends AppCompatActivity implements TabLayout.OnTab
 
     private static final String TAG = "ListChallenges";
     public static boolean isActivityRunning;
+    private Boolean mIsAdmin = true;
 
     // Firebase
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -88,19 +90,21 @@ public class ListChallenges extends AppCompatActivity implements TabLayout.OnTab
                 intent = new Intent(ListChallenges.this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.optionNewChallenge:
+                intent = new Intent(ListChallenges.this, NewChallenge.class);
+                startActivity(intent);
+                return true;
             case R.id.optionChat:
                 intent = new Intent(ListChallenges.this, ChatActivity.class);
                 startActivity(intent);
                 return true;
-//        case R.id.optionAdmin:
-//            if (mIsAdmin) {
-//                intent = new Intent(SignedInActivity.this, AdminActivity.class);
-//                startActivity(intent);
-//            } else {
-//                Toast.makeText(this, "You're not an Admin", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            return true;
+            case R.id.optionAdmin:
+                if (mIsAdmin) {
+                    intent = new Intent(ListChallenges.this, AdminActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "You're not an Admin", Toast.LENGTH_SHORT).show();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }

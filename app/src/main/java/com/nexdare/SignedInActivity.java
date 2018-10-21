@@ -154,19 +154,23 @@ public class SignedInActivity extends AppCompatActivity {
             intent = new Intent(SignedInActivity.this, SettingsActivity.class);
             startActivity(intent);
             return true;
+        case R.id.optionNewChallenge:
+                intent = new Intent(SignedInActivity.this, NewChallenge.class);
+                startActivity(intent);
+                return true;
         case R.id.optionChat:
             intent = new Intent(SignedInActivity.this, ChatActivity.class);
             startActivity(intent);
             return true;
-//        case R.id.optionAdmin:
-//            if (mIsAdmin) {
-//                intent = new Intent(SignedInActivity.this, AdminActivity.class);
-//                startActivity(intent);
-//            } else {
-//                Toast.makeText(this, "You're not an Admin", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            return true;
+        case R.id.optionAdmin:
+            if (mIsAdmin) {
+                intent = new Intent(SignedInActivity.this, AdminActivity.class);
+                startActivity(intent);
+           } else {
+                Toast.makeText(this, "You're not an Admin", Toast.LENGTH_SHORT).show();
+           }
+
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }

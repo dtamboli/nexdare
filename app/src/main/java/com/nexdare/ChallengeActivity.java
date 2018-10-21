@@ -214,8 +214,8 @@ public class ChallengeActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         case R.id.optionNewChallenge:
-            // intent = new Intent(ChallengeActivity.this, NewChallenge.class);
-            // startActivity(intent);
+             intent = new Intent(ChallengeActivity.this, NewChallenge.class);
+             startActivity(intent);
             return true;
         case R.id.optionChat:
             intent = new Intent(ChallengeActivity.this, ChatActivity.class);

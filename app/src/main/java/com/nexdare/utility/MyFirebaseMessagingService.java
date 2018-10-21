@@ -243,11 +243,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
             // add properties to the builder
-            builder.setSmallIcon(R.drawable.tabian_consulting_logo)
+            builder.setSmallIcon(R.drawable.nexdare_logo)
                     .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                            R.drawable.tabian_consulting_logo))
-                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)).setContentTitle(title)
-                    .setContentText(message).setColor(getColor(R.color.blue4)).setAutoCancel(true);
+                            R.drawable.nexdare_logo))
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)).setContentTitle(title);
+                //    .setContentText(message).setColor((R.color.blue4)).setAutoCancel(true);
 
             builder.setContentIntent(notifyPendingIntent);
 
