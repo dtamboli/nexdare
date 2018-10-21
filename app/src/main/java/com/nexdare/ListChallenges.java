@@ -36,6 +36,7 @@ public class ListChallenges extends AppCompatActivity implements TabLayout.OnTab
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_challenges);
         setupFirebaseAuth();
+        initImageLoader();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         //setSupportActionBar(toolbar);
