@@ -1,5 +1,6 @@
 package com.nexdare.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,7 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nexdare.ListChallenges;
+import com.nexdare.NewChallenge;
 import com.nexdare.R;
+import com.nexdare.SettingsActivity;
+import com.nexdare.ViewChallenge;
 import com.nexdare.models.Challenge;
 
 import java.util.ArrayList;
@@ -75,14 +82,14 @@ public class LisReceivedChallenges extends Fragment {
                     Challenge challenge = new Challenge();
                     Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
                     if (objectMap.get(getString(R.string.field_challenge_userId)) != null
-                            && objectMap.get(getString(R.string.field_challenge_receivedFrom)) != null) {
-                        String userId = objectMap.get(getString(R.string.field_challenge_userId)).toString();
-                        if (userId.equals(user.getEmail())) {
+                            && objectMap.get(getString(R.string.field_challenge_sentto)) != null) {
+                        String sentTo = objectMap.get(getString(R.string.field_challenge_sentto)).toString();
+                        if (sentTo.equals(user.getEmail())) {
                             challenge.setChallenge_id(objectMap.get(getString(R.string.field_challenge_id)).toString());
                             challenge.setName(objectMap.get(getString(R.string.field_challenge_name)).toString());
                             challenge
                                     .setDescription(objectMap.get(getString(R.string.field_challenge_desc)).toString());
-                            challenge.setReceivedFrom(objectMap.get(getString(R.string.field_challenge_receivedFrom)).toString());
+                            challenge.setReceivedFrom(objectMap.get(getString(R.string.field_challenge_userId)).toString());
                             challenge.setStatus(objectMap.get(getString(R.string.field_challenge_status)).toString());
                             challenge.setTimeFrame(Integer
                                     .parseInt(objectMap.get(getString(R.string.field_challenge_timeframe)).toString()));
@@ -112,7 +119,16 @@ public class LisReceivedChallenges extends Fragment {
                 tableView.addDataClickListener(new TableDataClickListener() {
                     @Override
                     public void onDataClicked(int rowIndex, Object clickedData) {
-                        Toast.makeText(getActivity(), ((String[])clickedData)[1], Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), ViewChallenge.class);
+
+                        //Add the bundle to the intent
+                        intent.putExtra("challengeName", ((String[])clickedData)[0]);
+                        intent.putExtra("status", ((String[])clickedData)[1]);
+                        intent.putExtra("from", ((String[])clickedData)[2]);
+                        intent.putExtra("timeRemaining", ((String[])clickedData)[3]);
+                        intent.putExtra("rules", ((String[])clickedData)[4]);
+
+                        startActivity(intent);
                     }
                 });
 
