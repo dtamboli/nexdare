@@ -6,7 +6,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -39,6 +40,7 @@
         <activity android:name="com.nexdare.ChatActivity"/>
         <activity android:name="com.nexdare.ChallengeActivity"/>
         <activity android:name="com.nexdare.NewChallenge"/>
+        <activity android:name="com.nexdare.ViewChallenge"/>
         <activity android:name="com.nexdare.ChatroomActivity"/>
         <activity android:name="com.nexdare.ListChallenges"/>
         <activity android:name="com.nexdare.AdminActivity"/>
