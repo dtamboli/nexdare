@@ -62,5 +62,7 @@ dependencies {
     }
     compile 'com.google.firebase:firebase-core:11.4.0'
 
+    compile 'joda-time:joda-time:2.9.4'
+
 }
 apply plugin: 'com.google.gms.google-services'
