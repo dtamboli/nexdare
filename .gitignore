@@ -9,5 +9,4 @@
 /captures
 .externalNativeBuild
 /app/
-
-
+.idea/caches/
