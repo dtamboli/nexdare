@@ -109,9 +109,9 @@ public class SignedInActivity extends AppCompatActivity {
     private void sendRegistrationToServer(String token) {
         Log.d(TAG, "sendRegistrationToServer: sending token to server: " + token);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child(getString(R.string.dbnode_users)).child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child(getString(R.string.field_messaging_token)).setValue(token);
-    }
+//        reference.child(getString(R.string.dbnode_users)).child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                .child(getString(R.string.field_messaging_token)).setValue(token);
+}
 
     @Override
     protected void onResume() {
@@ -158,15 +158,15 @@ public class SignedInActivity extends AppCompatActivity {
             intent = new Intent(SignedInActivity.this, ChatActivity.class);
             startActivity(intent);
             return true;
-        case R.id.optionAdmin:
-            if (mIsAdmin) {
-                intent = new Intent(SignedInActivity.this, AdminActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "You're not an Admin", Toast.LENGTH_SHORT).show();
-            }
-
-            return true;
+//        case R.id.optionAdmin:
+//            if (mIsAdmin) {
+//                intent = new Intent(SignedInActivity.this, AdminActivity.class);
+//                startActivity(intent);
+//            } else {
+//                Toast.makeText(this, "You're not an Admin", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            return true;
         default:
             return super.onOptionsItemSelected(item);
         }

@@ -77,7 +77,7 @@
                 android:layout_below="@+id/name"
                 android:textSize="10sp"
                 android:text="leave"
-                android:background="@drawable/red_onclick_grey"
+                android:background="@drawable/grey_border"
                 android:textColor="@color/White"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
