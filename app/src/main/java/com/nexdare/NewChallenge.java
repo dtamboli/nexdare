@@ -33,6 +33,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Hours;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -222,6 +224,11 @@ public class NewChallenge extends AppCompatActivity {
         challenge.setRules(rules.getText().toString());
 
         LocalDateTime currentTime = new LocalDateTime();
+
+        String timeLimit =time.getText().toString();
+/*
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy hh:mm a");
+        DateTime dt = formatter.parseDateTime(timeLimit);*/
         int hours  = Hours.hoursBetween(currentTime.toLocalDate(), mLocalDateTime.toLocalDate()).getHours();
 
         challenge.setTimeFrame(hours);
