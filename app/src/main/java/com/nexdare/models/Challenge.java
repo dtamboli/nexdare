@@ -18,6 +18,8 @@ public class Challenge implements Parcelable {
     private Date updatedTimestamp;
     private String sentTo;
     private String receivedFrom;
+    private String submitionNotes;
+    private String imageUri;
     private String userId;
 
     public Challenge() {
@@ -136,6 +138,22 @@ public class Challenge implements Parcelable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getSubmitionNotes() {
+        return submitionNotes;
+    }
+
+    public void setSubmitionNotes(String submitionNotes) {
+        this.submitionNotes = submitionNotes;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     @Override

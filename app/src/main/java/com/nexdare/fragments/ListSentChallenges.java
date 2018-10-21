@@ -45,7 +45,7 @@ public class ListSentChallenges extends Fragment {
     private ArrayList<Challenge> mChallenges;
 
     //HEADER DATA SOURCE
-    static String[] spaceProbeHeaders={"Name","Status","Sent To", "Time Remaining", "Rules"};
+    static String[] spaceProbeHeaders={"Name","Status","Sent To", "Time Remaining", "Rules", "ID"};
 
 
     public static ListSentChallenges newInstance() {
@@ -91,6 +91,8 @@ public class ListSentChallenges extends Fragment {
                             challenge.setStatus(objectMap.get(getString(R.string.field_challenge_status)).toString());
                             challenge.setTimeFrame(Integer
                                     .parseInt(objectMap.get(getString(R.string.field_challenge_timeframe)).toString()));
+                            challenge.setSubmitionNotes(objectMap.get("submitionNotes") == null ? "" : objectMap.get("submitionNotes").toString());
+                            challenge.setImageUri(objectMap.get("imageUri") == null ? "" : objectMap.get("imageUri").toString());
                             mChallenges.add(challenge);
                         }
                     }
@@ -108,7 +110,8 @@ public class ListSentChallenges extends Fragment {
                 List<String[]> data = new ArrayList<>();
                 for(Challenge challenge : mChallenges) {
                     String[] strings = {challenge.getName(),challenge.getStatus(),challenge.getSentTo(),
-                            String.valueOf(challenge.getTimeFrame()), challenge.getRules()};
+                            String.valueOf(challenge.getTimeFrame()), challenge.getRules(),
+                            challenge.getSubmitionNotes(), challenge.getImageUri(), challenge.getChallenge_id()};
                     data.add(strings);
                 }
                 tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity(), data));
@@ -125,6 +128,9 @@ public class ListSentChallenges extends Fragment {
                         intent.putExtra("from", ((String[])clickedData)[2]);
                         intent.putExtra("timeRemaining", ((String[])clickedData)[3]);
                         intent.putExtra("rules", ((String[])clickedData)[4]);
+                        intent.putExtra("submitionNotes", ((String[])clickedData)[5]);
+                        intent.putExtra("imageUri", ((String[])clickedData)[6]);
+                        intent.putExtra("challengeId", ((String[])clickedData)[7]);
 
                         startActivity(intent);
                     }
