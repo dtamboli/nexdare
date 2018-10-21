@@ -122,7 +122,7 @@ public class NewChallenge extends AppCompatActivity {
     }
 
     public void init(){
-     //   createChallenge();
+        createChallenge();
       //  getChallenges();
     }
 

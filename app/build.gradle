@@ -6,7 +6,7 @@ android {
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.nexdare"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -61,6 +61,9 @@ dependencies {
         transitive = true
     }
     compile 'com.google.firebase:firebase-core:11.4.0'
+
+    compile 'joda-time:joda-time:2.9.4'
+
 
 }
 apply plugin: 'com.google.gms.google-services'
